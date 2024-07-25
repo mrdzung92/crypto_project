@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "binance-api-node": "^0.12.7",
+    "express": "^4.19.2",
+    "ioredis": "^5.4.1",
+    "socket.io": "^4.7.5",
+    "ws": "^8.17.1"
+  }
+}

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <g id="guize" transform="translate(-336 -83)">
+    <circle id="椭圆_1688" data-name="椭圆 1688" cx="12" cy="12" r="12" transform="translate(336 83)" fill="#e2ebff"/>
+    <g id="组_874" data-name="组 874" transform="translate(255.667 2.667)">
+      <path id="路径_3375" data-name="路径 3375" d="M92.333,99.333a7,7,0,1,1,7-7,7,7,0,0,1-7,7Zm0-12.95a5.95,5.95,0,1,0,5.95,5.95A5.95,5.95,0,0,0,92.333,86.383Z" fill="#3c6cd6"/>
+      <path id="路径_3376" data-name="路径 3376" d="M470.036,298.667a.7.7,0,1,1-.7.7A.7.7,0,0,1,470.036,298.667Zm0,2.107a.527.527,0,0,1,.527.527v3.863a.527.527,0,0,1-1.054,0V301.3A.527.527,0,0,1,470.036,300.774Z" transform="translate(-377.703 -209.846)" fill="#3c6cd6"/>
+    </g>
+  </g>
+</svg>
