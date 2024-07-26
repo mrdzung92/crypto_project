@@ -166,7 +166,7 @@ export default {
           icon: icon7
         },
         {
-          link: '#',
+          link: '/BBtrade',
           name: '币币交易',
           icon: icon8
         },

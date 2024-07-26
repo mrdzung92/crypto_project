@@ -101,6 +101,12 @@ const router = createRouter({
       component: () => import('../views/TradeSecond.vue'),
     },
     {
+      path: '/BBtrade',
+      name: 'BBtrade',
+      component: () => import('../views/BBtrade.vue'),
+    },
+    
+    {
       path: '/productPlan',
       name: 'ProductPlan',
       component: () => import('../views/ProductPlan.vue'),
