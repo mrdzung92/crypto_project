@@ -1,20 +1,30 @@
 <template>
-    <div>
-        <TopSelectCoin />
+    <div class="bb-trade-content">
         <TradeInfo />
+        <div class="buy-info">
+           
+        </div>
     </div>
 </template>
 
 <script>
-import TopSelectCoin from '@/components/TopSelectCoin.vue'
+
 import TradeInfo from '@/components/TradeInfo.vue'
 
 export default {
     components: {
-        TopSelectCoin,
         TradeInfo
     }
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.bb-trade-content{
+    padding: 2rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    .buy-info {
+        flex: 1;
+    }
+}
+</style>
