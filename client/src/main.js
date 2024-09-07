@@ -8,7 +8,7 @@ import router from './router'
 import store from './store'
 import Vant from 'vant'
 import io from 'socket.io-client'
-const socket = io('http://localhost:3000')
+const socket = process.env.NODE_ENV ==='development'? io('http://localhost:3000'):io('')
 import apiService from './services/api/apiService'
 async function appInitallySetting() {
     await apiService.get('Guest/getConfig').then(res => {

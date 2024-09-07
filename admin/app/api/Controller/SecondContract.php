@@ -2,7 +2,7 @@
 namespace app\api\controller;
 
 use app\api\controller\BaseController;
-use app\api\Validate\TradeSecondValidate;
+use app\api\validate\TradeSecondValidate;
 use app\model\CoinDefineModel;
 use app\model\SecondContractModel;
 use app\Queue\CheckBetResult;

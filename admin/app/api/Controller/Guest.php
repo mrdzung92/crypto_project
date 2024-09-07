@@ -4,7 +4,7 @@ namespace app\api\controller;
 use app\api\controller\BaseController;
 use app\Service\BinanceService;
 use app\Service\UsersService;
-use app\api\Validate\AuthValidate;
+use app\api\validate\AuthValidate;
 use app\model\CoinDefineModel;
 use app\model\UsersModel;
 use think\captcha\facade\Captcha;

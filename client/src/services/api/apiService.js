@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const apiClient = axios.create({
-  baseURL: process.env.VITE_API_BASE_URL + '/api/', // Sử dụng biến môi trường
+  baseURL: process.env.NODE_ENV ==='development'? process.env.VITE_API_BASE_URL + '/api/':'/api/', // Sử dụng biến môi trường
   headers: {
     'Content-Type': 'application/json',
   },
