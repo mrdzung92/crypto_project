@@ -172,7 +172,7 @@ class SecondContract extends BaseController
         } else {
             $query = SecondContractModel::mk()
                 ->whereIn('status', '2,3,4')->where('uid', request()->payload['id'])
-                ->field('id as bet_id,end_price,start_price,time,direction,0 as expected_profit,bet_amount,FROM_UNIXTIME(add_time,"%Y/%m/%d %H:%i:%s") as add_time,FROM_UNIXTIME(settlement_time,"%Y/%m/%d %H:%i:%s") as settlement_time,code,bet_result')->order('id', 'desc')->select();
+                ->field('id as bet_id,end_price,start_price,time,direction,bet_amount,FROM_UNIXTIME(add_time,"%Y/%m/%d %H:%i:%s") as add_time,FROM_UNIXTIME(settlement_time,"%Y/%m/%d %H:%i:%s") as settlement_time,code,bet_result')->order('id', 'desc')->select();
         }
 
         if ($query) {
@@ -193,20 +193,37 @@ class SecondContract extends BaseController
      */
     public function checkBetResult()
     {
-
         $betId = input('betId');
         if ($betId == '') {
             return $this->error('缺少参数');
         }
 
         $uid = request()->payload['id'];
+        return $this->retryCheckBetResult($betId, $uid, 3);
+    }
+
+    private function retryCheckBetResult($betId, $uid, $retries)
+    {
         $betData = SecondContractModel::mk()->where('uid', $uid)
             ->where('id', $betId)
-            ->field('id as bet_id,end_price,start_price,time,direction,0 as expected_profit,bet_amount,FROM_UNIXTIME(add_time,"%Y/%m/%d %H:%i:%s") as add_time,FROM_UNIXTIME(settlement_time,"%Y/%m/%d %H:%i:%s") as settlement_time,code,bet_result')
+            ->field('id as bet_id,end_price,start_price,time,direction,0 as expected_profit,bet_amount,FROM_UNIXTIME(add_time,"%Y/%m/%d %H:%i:%s") as add_time,FROM_UNIXTIME(settlement_time,"%Y/%m/%d %H:%i:%s") as settlement_time,code,bet_result,status')
             ->findOrEmpty();
+
         if ($betData->isEmpty()) {
             return $this->error('订单不存在');
         }
+
+        if ($betData['status'] == 1 && $retries > 0) {
+            // Trì hoãn 3 giây
+            sleep(3);
+            // Thử lại việc lấy dữ liệu
+            return $this->retryCheckBetResult($betId, $uid, $retries - 1);
+        }
+
+        if ($betData['status'] == 1) {
+            return $this->error('Job still processing');
+        }
+
         return $this->success('操作成功', $betData);
     }
 

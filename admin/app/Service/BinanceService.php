@@ -41,4 +41,5 @@ class BinanceService extends AdminService
         return json_decode($data, true);
     }
 
+ 
 }

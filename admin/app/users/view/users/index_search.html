@@ -1,46 +1,50 @@
 <fieldset>
     <legend>{:lang('条件搜索')}</legend>
-    <form class="layui-form layui-form-pane form-search" action="{:sysuri()}" onsubmit="return false" method="get" autocomplete="off">
-
+    <form class="layui-form layui-form-pane form-search" action="{:sysuri()}" onsubmit="return false" method="get"
+        autocomplete="off">
         <div class="layui-form-item layui-inline">
-            <label class="layui-form-label">{:lang('文件名称')}</label>
-            <label class="layui-input-inline">
-                <input name="name" value="{$get.name|default=''}" placeholder="{:lang('请输入文件名称')}" class="layui-input">
-            </label>
-        </div>
-
-        <div class="layui-form-item layui-inline">
-            <label class="layui-form-label">{:lang('文件哈希')}</label>
-            <label class="layui-input-inline">
-                <input name="hash" value="{$get.hash|default=''}" placeholder="{:lang('请输入文件哈希')}" class="layui-input">
-            </label>
-        </div>
-
-        <div class="layui-form-item layui-inline">
-            <label class="layui-form-label">{:lang('文件后缀')}</label>
+            <label class="layui-form-label">账号类型</label>
             <div class="layui-input-inline">
-                <select name="xext" lay-search class="layui-select">
-                 
+                <select class="layui-select" name="status">
+                    <option value=''>账号</option>
+                    <option value=''>代理</option>
                 </select>
             </div>
         </div>
 
         <div class="layui-form-item layui-inline">
-            <label class="layui-form-label">{:lang('存储方式')}</label>
+            <label class="layui-form-label">用户账号</label>
             <div class="layui-input-inline">
-                <select name="type" lay-search class="layui-select">
-                  
+                <input name="title" value="{$get.title|default=''}" placeholder="{:lang('请输入权限名称')}"
+                    class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item layui-inline">
+            <label class="layui-form-label">冻结状态</label>
+            <div class="layui-input-inline">
+                <select class="layui-select" name="status">
+                    <option value=''>-- {:lang('全部')} --</option>
+                    <option value=''>账号</option>
+                    <option value=''>代理</option>
                 </select>
             </div>
         </div>
+        
+            <div class="layui-inline">
+                <div class="layui-inline">
+                    <label class="layui-form-label">日期选择</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="date" id="date1" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
 
-        <div class="layui-form-item layui-inline">
-            <label class="layui-form-label">{:lang('创建时间')}</label>
-            <div class="layui-input-inline">
-                <input data-date-range name="create_at" value="{$get.create_at|default=''}" placeholder="{:lang('请选择创建时间')}" class="layui-input">
+                <div class="layui-inline">
+                    <div class="layui-input-block">
+                        <input type="text" name="number" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
             </div>
-        </div>
-
+        
         <div class="layui-form-item layui-inline">
             <button class="layui-btn layui-btn-primary"><i class="layui-icon">&#xe615;</i> {:lang('搜 索')}</button>
         </div>

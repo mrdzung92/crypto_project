@@ -80,8 +80,8 @@ export default {
             activeSelectPriceChange: 0,
             selectBuySellOpt: ['默认', '卖出', '买入'],
             showSelectBuySellOpt: false,
-            activeSelectBuySellOpt: 0
-
+            activeSelectBuySellOpt: 0,
+            interValId: ''
         }
     },
     created() {
@@ -92,6 +92,16 @@ export default {
             this.symbol = this.$store.state.coinSymbolDefault;
         }
         this.getCoinInfo()
+
+
+    },
+    mounted() {
+        this.interValId = setInterval(() => {
+            this.caculateBuySellList()
+        }, 1000);
+        // setTimeout(() => {
+        //     this.caculateBuySellList()
+        // }, 1000);
     },
     watch: {
         '$store.state.coinSymbolDefault'(value) {
@@ -100,28 +110,51 @@ export default {
         }
     },
     methods: {
+
         changeSelectBuySellOpt() {
-            
+
         },
         selectPriceChange(index) {
             this.activeSelectPriceChange = index
-            this.showPriceChange = false
+            this.showPriceChange = falseơ
             this.priceChangeVal = this.priceChange[index]
-            this.caculateBuySellList()
         },
         caculateBuySellList() {
 
+            let strPriceChangeVal = this.priceChangeVal.toString()
+            this.buyList = []
+            this.sellList = []
+
+            let initCoinPrice = this.coinInfo.price.toString().replace('.', '');
+
+            let buyPrice = parseInt(initCoinPrice)
+            let sellPrice = parseInt(initCoinPrice)
+            let partsStrPriceChangeVal = strPriceChangeVal.split('.');
+            let decimalPart = partsStrPriceChangeVal[1];
+            strPriceChangeVal = parseInt(1 + '0'.repeat(decimalPart.length))
+            for (let i = 1; i <= 5; i++) {
+                buyPrice += parseInt(strPriceChangeVal)
+                sellPrice -= parseInt(strPriceChangeVal)
+                let buyItem = { price: formatNumber(buyPrice.toString().slice(0, (buyPrice.toString().length-1)-decimalPart.length) + '.' + buyPrice.toString().slice((buyPrice.toString().length-1)-decimalPart.length)), volume: this.getRandomFloat(0, 100) }
+                let sellItem = { price: formatNumber(sellPrice.toString().slice(0, decimalPart.length) + '.' + sellPrice.toString().slice(decimalPart.length)), volume: this.getRandomFloat(0, 100) }
+                this.sellList.unshift(sellItem)
+                this.buyList.push(buyItem)
+            }
+            console.log(partsStrPriceChangeVal)
+
+        },
+        getRandomFloat(min, max) {
+            return Math.random() * (max - min) + min;
         },
         caculateChangePrice() {
             const coinPrice = parseInt(this.coinInfo.price) + ''
-            let len = coinPrice.length
+            let len = 5 - (coinPrice.length - 1)
             this.priceChange = [];
-            for (let i = 4; i >= 1; i--) {
-                this.priceChange.push((1 + '0'.repeat(len - i)) / 100)
+            for (let i = 1; i <= 4; i++) {
+                this.priceChange.unshift(('0.' + '0'.repeat(len) + '1') * 10000)
+                len += 1
             }
             this.priceChangeVal = this.priceChange[0]
-            // const initPriceChange = initNum / this.coinInfo.price
-
         },
 
         async getCoinInfo() {
@@ -131,6 +164,7 @@ export default {
                 if (res.data.code === 1) {
                     this.coinInfo.price = formatNumber(parseFloat(res.data.data.askPrice))
                     this.coinInfo.priceChangePercent = res.data.data.priceChangePercent
+
                     this.caculateChangePrice()
                 } else {
                     console.error('Failed to fetch coin list:', res.info);
@@ -148,7 +182,11 @@ export default {
             });
 
         }
-    }
+    },
+    unmounted() {
+        clearInterval(this.interValId)
+
+    },
 }
 </script>
 

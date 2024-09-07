@@ -114,6 +114,16 @@ const router = createRouter({
         requiresAuth: false,
       }
     },
+    {
+      path: '/swap',
+      name: 'Swap',
+      component: () => import('../views/Swap.vue'),
+    },
+    {
+      path: '/transfer',
+      name: 'Transfer',
+      component: () => import('../views/Transfer.vue'),
+    },
 
   ]
 })
