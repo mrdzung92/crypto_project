@@ -1,7 +1,7 @@
 <template>
     <div class="trade-page">
         <header>
-            <p class="back"><van-icon name="arrow-left" /></p>
+            <p class="back"><van-icon name="arrow-left" @click="()=>{$router.push('/')}" /></p>
             <van-tabs v-model:active="active">
                 <van-tab title="秒合约"> </van-tab>
                 <van-tab title="币币交易"> </van-tab>
@@ -18,6 +18,7 @@
 
 <script>
 import SecondContract from '@/components/SecondContract.vue'
+import router from '@/router';
 export default {
     components: {
         SecondContract

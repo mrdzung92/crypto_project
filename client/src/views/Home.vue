@@ -146,7 +146,7 @@ export default {
           icon: icon3
         },
         {
-          link: '#',
+          link: '/swap',
           name: '闪兑',
           icon: icon4
         },
