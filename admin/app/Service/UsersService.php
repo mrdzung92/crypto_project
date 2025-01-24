@@ -55,8 +55,7 @@ class UsersService extends AdminService
     public function saveRedis($userInfo)
     {
         $redis = new \think\cache\driver\Redis(Config::get('cache.stores.redis'));
-        echo '<pre>';
-        print_r($redis);
+        
         $username = $userInfo['username'];
         $userData = [
             'username' => $username,
