@@ -1,0 +1,66 @@
+{extend name='../../admin/view/table'}
+{block name="content"}
+<style>
+    .layui-table-cell {
+        height: inherit;
+        line-height: inherit;
+    }
+</style>
+<div class="think-box-shadow">
+    <div class="think-box-notify" type="info">
+        <button data-table-id="SliderTable" data-modal='{:url("add")}?type={$type|default=""}'
+            class='layui-btn layui-btn-sm layui-btn-primary'>添加轮播图</button>
+        <button data-table-id="SliderTable" data-action='{:url("remove")}' data-rule="id#{id}"
+            data-confirm="{:lang('确定批量删除记录吗？')}"
+            class='layui-btn layui-btn-sm layui-btn-primary layui-border-red'>{:lang('批量删除')}</button>
+    </div>
+    <table id="SliderTable" data-url="{:sysuri('index')}" data-target-search="form.form-search"></table>
+</div>
+<script>
+    $(function () {
+        $('#SliderTable').layTable({
+            even: true, height: 'full',
+            sort: { field: 'ordering', type: 'desc' },
+            cols: [[
+                { checkbox: true, fixed: 'left' },
+                { field: 'id', title: 'ID', align: 'center' },
+                { field: 'name', title: '名称', align: 'center' },
+                { field: 'image', title: '图片', align: 'center' },
+                { field: 'link', title: '链接', align: 'center' },
+                {
+                    field: 'status', title: '状态', align: 'center', templet: (d) => {
+                        let checked = d.status === 1 ? 'checked' : ''
+                        return `<input type="checkbox" ${checked} value="1" name="status" title="正常|禁用" lay-skin="switch">`
+                    }
+                },
+                { field: 'ordering', title: '排序', align: 'center' },
+                { toolbar: '#toolbar', title: '{:lang("操作面板")}', align: 'center', minWidth: 150, fixed: 'right' }
+            ]]
+ 
+        });
+
+         // 数据状态切换操作
+         layui.form.on('switch(StatusSwitch)', function (object) {
+            object.data = {status: object.elem.checked > 0 ? 1 : 0};
+            object.data.id = object.value.split('|')[object.data.status] || object.value;
+            $.form.load("{:url('state')}", object.data, 'post', function (ret) {
+                if (ret.code < 1) $.msg.error(ret.info, 3, function () {
+                    $('#MenuTable').trigger('reload');
+                }); else {
+                    $('#MenuTable').trigger('reload');
+                }
+                return false;
+            }, false);
+        });
+    });
+</script>
+<script type="text/html" id="toolbar">
+    <!--{if auth("edit")}-->
+<a class="layui-btn layui-btn-sm" data-modal="{:url('edit')}?id={{d.id}}" data-title="编辑文件信息">{:lang("编 辑")}</a>
+<!--{/if}-->
+<!--{if auth("remove")}-->
+<a class="layui-btn layui-btn-sm layui-btn-danger" data-action="{:url('remove')}" data-value="id#{{d.id}}">{:lang("删
+    除")}</a>
+<!--{/if}-->
+</script>
+{/block}
